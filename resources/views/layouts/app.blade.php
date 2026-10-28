@@ -30,7 +30,16 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
-
+                        @auth
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('habitaciones.index') }}">Habitaciones</a>
+                            </li>
+                            @if (auth()->user()->tieneRol('administrador'))
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('tipos-habitacion.index') }}">Tipos de habitación</a>
+                                </li>
+                            @endif
+                        @endauth
                     </ul>
 
                     <!-- Right Side Of Navbar -->
