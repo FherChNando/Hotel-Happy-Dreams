@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HabitacionController;
 use App\Http\Controllers\TipoHabitacionController;
+use App\Http\Controllers\EmpresaController;
+use App\Http\Controllers\HuespedController;
+use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -27,4 +30,23 @@ Route::middleware(['auth', 'rol:administrador'])->group(function () {
     Route::resource('tipos-habitacion', TipoHabitacionController::class)
         ->except(['show'])
         ->parameters(['tipos-habitacion' => 'tipo']);
+});
+
+// Huéspedes: administrador y recepcionista
+Route::middleware(['auth', 'rol:administrador,recepcionista'])->group(function () {
+    Route::resource('huespedes', HuespedController::class)
+        ->except(['show', 'destroy'])
+        ->parameters(['huespedes' => 'huesped']);
+});
+
+// Solo administrador
+Route::middleware(['auth', 'rol:administrador'])->group(function () {
+    Route::delete('huespedes/{huesped}', [HuespedController::class, 'destroy'])->name('huespedes.destroy');
+
+    Route::resource('empresas', EmpresaController::class)->except(['show']);
+
+    Route::resource('usuarios', UserController::class)
+        ->except(['show', 'destroy'])
+        ->parameters(['usuarios' => 'usuario']);
+    Route::patch('usuarios/{usuario}/activo', [UserController::class, 'cambiarActivo'])->name('usuarios.activo');
 });
