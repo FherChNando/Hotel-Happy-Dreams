@@ -39,6 +39,17 @@
                                     <a class="nav-link" href="{{ route('tipos-habitacion.index') }}">Tipos de habitación</a>
                                 </li>
                             @endif
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('huespedes.index') }}">Huéspedes</a>
+                            </li>
+                            @if (auth()->user()->tieneRol('administrador'))
+                                <li class="nav-item">
+                                <a class="nav-link" href="{{ route('empresas.index') }}">Empresas</a>
+                                </li>
+                                <li class="nav-item">
+                                <a class="nav-link" href="{{ route('usuarios.index') }}">Usuarios</a>
+                                </li>
+                            @endif
                         @endauth
                     </ul>
 
