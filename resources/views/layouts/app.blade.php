@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Happy Dreams') }}</title>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
@@ -21,36 +21,66 @@
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                    {{ config('app.name', 'Happy Dreams') }}
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent"
+                    aria-expanded="false"
+                    aria-label="{{ __('Toggle navigation') }}"
+                >
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
                         @auth
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('habitaciones.index') }}">Habitaciones</a>
+                                <a class="nav-link" href="{{ route('habitaciones.index') }}">
+                                    Habitaciones
+                                </a>
                             </li>
+
                             @if (auth()->user()->tieneRol('administrador'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('tipos-habitacion.index') }}">Tipos de habitación</a>
+                                    <a class="nav-link" href="{{ route('tipos-habitacion.index') }}">
+                                        Tipos de habitación
+                                    </a>
                                 </li>
                             @endif
+
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('huespedes.index') }}">Huéspedes</a>
+                                <a class="nav-link" href="{{ route('huespedes.index') }}">
+                                    Huéspedes
+                                </a>
                             </li>
+
                             @if (auth()->user()->tieneRol('administrador'))
                                 <li class="nav-item">
-                                <a class="nav-link" href="{{ route('empresas.index') }}">Empresas</a>
+                                    <a class="nav-link" href="{{ route('empresas.index') }}">
+                                        Empresas
+                                    </a>
                                 </li>
+
                                 <li class="nav-item">
-                                <a class="nav-link" href="{{ route('servicios.index') }}">Servicios</a>
+                                    <a class="nav-link" href="{{ route('usuarios.index') }}">
+                                        Usuarios
+                                    </a>
                                 </li>
+                            @endif
+
+                            {{-- Reservas: visible para administrador y recepcionista --}}
+                            @if (auth()->user()->tieneRol('administrador', 'recepcionista'))
                                 <li class="nav-item">
-                                <a class="nav-link" href="{{ route('usuarios.index') }}">Usuarios</a>
+                                    <a class="nav-link" href="{{ route('reservas.index') }}">
+                                        Reservas
+                                    </a>
                                 </li>
                             @endif
                         @endauth
@@ -62,29 +92,52 @@
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                    <a class="nav-link" href="{{ route('login') }}">
+                                        {{ __('Login') }}
+                                    </a>
                                 </li>
                             @endif
 
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    <a class="nav-link" href="{{ route('register') }}">
+                                        {{ __('Register') }}
+                                    </a>
                                 </li>
                             @endif
                         @else
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                <a
+                                    id="navbarDropdown"
+                                    class="nav-link dropdown-toggle"
+                                    href="#"
+                                    role="button"
+                                    data-bs-toggle="dropdown"
+                                    aria-haspopup="true"
+                                    aria-expanded="false"
+                                    v-pre
+                                >
                                     {{ Auth::user()->name }}
                                 </a>
 
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                                <div
+                                    class="dropdown-menu dropdown-menu-end"
+                                    aria-labelledby="navbarDropdown"
+                                >
+                                    <a
+                                        class="dropdown-item"
+                                        href="{{ route('logout') }}"
+                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                                    >
                                         {{ __('Logout') }}
                                     </a>
 
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    <form
+                                        id="logout-form"
+                                        action="{{ route('logout') }}"
+                                        method="POST"
+                                        class="d-none"
+                                    >
                                         @csrf
                                     </form>
                                 </div>

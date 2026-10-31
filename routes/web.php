@@ -7,6 +7,7 @@ use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\HuespedController;
 use App\Http\Controllers\ServicioController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ReservaController;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -52,4 +53,10 @@ Route::middleware(['auth', 'rol:administrador'])->group(function () {
         ->except(['show', 'destroy'])
         ->parameters(['usuarios' => 'usuario']);
     Route::patch('usuarios/{usuario}/activo', [UserController::class, 'cambiarActivo'])->name('usuarios.activo');
+});
+
+Route::middleware(['auth', 'rol:administrador,recepcionista'])->group(function () {
+    Route::get('reservas/disponibilidad', [ReservaController::class, 'disponibilidad'])->name('reservas.disponibilidad');
+    Route::patch('reservas/{reserva}/cancelar', [ReservaController::class, 'cancelar'])->name('reservas.cancelar');
+    Route::resource('reservas', ReservaController::class)->except(['destroy']);
 });
