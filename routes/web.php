@@ -5,11 +5,12 @@ use App\Http\Controllers\HabitacionController;
 use App\Http\Controllers\TipoHabitacionController;
 use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\HuespedController;
+use App\Http\Controllers\ServicioController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ReservaController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
 });
 
 Auth::routes(['register' => false]);
@@ -45,6 +46,8 @@ Route::middleware(['auth', 'rol:administrador'])->group(function () {
     Route::delete('huespedes/{huesped}', [HuespedController::class, 'destroy'])->name('huespedes.destroy');
 
     Route::resource('empresas', EmpresaController::class)->except(['show']);
+
+    Route::resource('servicios', ServicioController::class)->except(['show']);
 
     Route::resource('usuarios', UserController::class)
         ->except(['show', 'destroy'])
