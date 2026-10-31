@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Happy Dreams') }}</title>
+    <title>Happy Dreams | Hotel &amp; Suites</title>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
@@ -16,12 +16,16 @@
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
-<body>
+<body class="hotel-app">
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-lg navbar-dark site-navbar">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Happy Dreams') }}
+                    <span class="brand-mark" aria-hidden="true">HD</span>
+                    <span class="brand-copy">
+                        <strong>Happy Dreams</strong>
+                        <small>Hotel &amp; Suites</small>
+                    </span>
                 </a>
 
                 <button
@@ -148,7 +152,7 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <main class="app-main py-4 py-lg-5">
             @yield('content')
         </main>
     </div>
